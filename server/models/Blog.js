@@ -10,6 +10,10 @@ const blogSchema = mongoose.Schema(
             type: String,
             trim: true,
         },
+        thumbnail: {
+            type: String,
+            required: true,
+        },
         topics: [
             {
                 type: String,

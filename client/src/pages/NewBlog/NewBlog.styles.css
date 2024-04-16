@@ -1,0 +1,5 @@
+.newblog-container {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(to right, #c4c4c4, #171717);
+}

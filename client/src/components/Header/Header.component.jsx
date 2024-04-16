@@ -6,6 +6,7 @@ import "./Header.styles.css";
 import CustomButton from "../CustomButton/CustomButton.component";
 import { useAuthContext } from "../../contexts/AuthContext";
 import LogoutButton from "../LogoutButton/LogoutButton.component";
+import ProfileIcon from "../ProfileIcon/ProfileIcon.component";
 // const CustomButton = ({ bgColor, textColor, text, to }) => {
 //     const customClass = `custom-btn bg-${bgColor} text-${textColor}`;
 //     return (
@@ -16,7 +17,7 @@ import LogoutButton from "../LogoutButton/LogoutButton.component";
 // };
 
 const Header = () => {
-    const { isAuthenticated } = useAuthContext();
+    const { isAuthenticated, userData } = useAuthContext();
     return (
         <div className="header-div py-4 px-6 md:px-12 xl:px-24">
             <div className="mx-auto flex justify-between items-center max-w-screen-xl">
@@ -36,6 +37,11 @@ const Header = () => {
                         </Link>
                     )}
                     {isAuthenticated && <LogoutButton />}
+                    {isAuthenticated && (
+                        <Link to="/dashboard">
+                            <ProfileIcon name={userData.username} />
+                        </Link>
+                    )}
                     {!isAuthenticated && (
                         <CustomButton
                             to="/register"

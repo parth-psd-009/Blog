@@ -2,12 +2,14 @@ const express = require("express");
 const router = express.Router();
 const {
     createBlogController,
+    getBlogsController,
     // editBlogController,
 } = require("../controllers/BlogController");
 const { isAuthenticated } = require("../middlewares/Auth");
 
 // CREATE AND EDIT BLOG ROUTES
 router.route("/createblog").post(isAuthenticated, createBlogController);
+router.route("/blogs").get(isAuthenticated, getBlogsController);
 
 // router.route("/editblog/:blogid").put(editBlogController);
 

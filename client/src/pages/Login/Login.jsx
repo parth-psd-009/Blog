@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Register.styles.css";
+import "./Login.styles.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LabelInput from "../../components/LabelInput/LabelInput.component";
@@ -30,12 +30,11 @@ import { useAuthContext } from "../../contexts/AuthContext";
 //     );
 // };
 
-const Register = () => {
+const Login = () => {
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
-        confirmPassword: "",
     });
     // const [isAuthenticated, setIsAuthenticated] = useState(false);
     const { isAuthenticated, setIsAuthenticatedTrue, setIsAuthenticatedFalse } =
@@ -57,7 +56,7 @@ const Register = () => {
         try {
             // console.log(formData);
             const response = await axios.post(
-                "http://localhost:4000/api/v1/user/register",
+                "http://localhost:4000/api/v1/user/login",
                 formData,
                 {
                     headers: {
@@ -77,23 +76,19 @@ const Register = () => {
                 setIsAuthenticatedTrue();
                 console.log(isAuthenticated);
                 navigate("/dashboard");
-            } else if (response.status == 409) {
-                console.log("User already exists with given username or email");
+            } else if (response.status == 404) {
+                console.log("No user found please check your credentials");
             } else if (response.status == 422) {
                 console.log("Password and confirm password do not match");
             } else {
-                console.log("Register failed");
+                console.log("Login failed");
             }
         } catch (error) {
             console.log("Error: ", error.message);
         }
     };
     return (
-        <form
-            className="form-div flex flex-col pt-20"
-            method="POST"
-            // action="http://localhost:4000/api/v1/user/register"
-        >
+        <form className="form-div flex flex-col pt-20" method="POST">
             <LabelInput
                 type="text"
                 name="username"
@@ -121,24 +116,15 @@ const Register = () => {
                 value={formData.password}
                 onChangeHandler={handleChange}
             />
-            <LabelInput
-                type="password"
-                name="confirmPassword"
-                id="confirmPassword"
-                placeholder="Confirm Password"
-                label="Confirm Password"
-                value={formData.confirmPassword}
-                onChangeHandler={handleChange}
-            />
             <button
                 className="submit-btn bg-black text-white"
                 type="submit"
                 onClick={submitHandler}
             >
-                Register
+                Login
             </button>
         </form>
     );
 };
 
-export default Register;
+export default Login;

@@ -12,7 +12,8 @@ const LogoutButton = () => {
         try {
             // Make a POST request to the logout endpoint
             await axios.get("http://localhost:4000/api/v1/user/logout");
-
+            console.log("Logged out");
+            localStorage.removeItem("token");
             // Update the authentication state
             setIsAuthenticatedFalse();
 

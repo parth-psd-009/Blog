@@ -2,8 +2,10 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext();
+
 export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [userData, setUserData] = useState("");
 
     const setIsAuthenticatedTrue = () => {
         setIsAuthenticated(true);
@@ -11,17 +13,36 @@ export const AuthProvider = ({ children }) => {
 
     const setIsAuthenticatedFalse = () => {
         setIsAuthenticated(false);
+        setUserData(""); // Set userData to null when user is not authenticated
     };
 
     useEffect(() => {
-        try {
-            const user = axios.get("http://localhost:4000/api/v1/user/profile");
-            if (user) {
-                setIsAuthenticated(true);
+        const checkLoggedIn = async () => {
+            const token = localStorage.getItem("token");
+            if (token) {
+                try {
+                    const response = await axios.get(
+                        "http://localhost:4000/api/v1/user/profile",
+                        {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        }
+                    );
+                    if (response) {
+                        setUserData(response.data.user);
+                        setIsAuthenticated(true);
+                    }
+                } catch (error) {
+                    console.log(error);
+                    setIsAuthenticatedFalse(); // Call setIsAuthenticatedFalse when error occurs
+                }
+            } else {
+                setIsAuthenticatedFalse(); // Call setIsAuthenticatedFalse when token is not present
             }
-        } catch (e) {
-            setIsAuthenticated(false);
-        }
+        };
+
+        checkLoggedIn();
     }, []);
 
     return (
@@ -30,6 +51,7 @@ export const AuthProvider = ({ children }) => {
                 isAuthenticated,
                 setIsAuthenticatedTrue,
                 setIsAuthenticatedFalse,
+                userData,
             }}
         >
             {children}

@@ -1,0 +1,41 @@
+.blog-card {
+    display: flex;
+    background-color: #ffffff; /* Background color of the card */
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle elevation effect */
+}
+
+.blog-thumbnail {
+    width: 120px; /* Adjust as needed */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 16px; /* Spacing between thumbnail and details */
+}
+
+.blog-details {
+    flex: 1; /* Take remaining space */
+}
+
+.blog-title {
+    font-size: 1.5rem; /* Adjust font size */
+    margin-bottom: 8px; /* Spacing between title and description */
+}
+
+.blog-description {
+    margin-bottom: 8px; /* Spacing between description and tags */
+}
+
+.blog-tags {
+    display: flex;
+    flex-wrap: wrap; /* Allow tags to wrap to the next line if necessary */
+}
+
+.tag {
+    background-color: #f0f0f0; /* Background color of the tags */
+    color: #333333; /* Text color of the tags */
+    font-size: 0.8rem; /* Adjust font size */
+    padding: 4px 8px; /* Padding around tags */
+    border-radius: 4px; /* Rounded corners */
+    margin-right: 8px; /* Spacing between tags */
+    margin-bottom: 8px; /* Vertical spacing between tags */
+}
